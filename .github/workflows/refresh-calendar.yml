@@ -1,0 +1,45 @@
+name: Refresh calendar
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"   # every 15 minutes (GitHub may run it a few minutes late)
+  workflow_dispatch:         # adds a "Run workflow" button for manual refreshes
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-calendar
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch classroom sessions from 360Learning
+        run: node scripts/fetch-events.mjs
+        env:
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          PLATFORM_URL: ${{ vars.PLATFORM_URL }}
+          API_BASE: ${{ vars.API_BASE }}
+          SESSION_LINK: ${{ vars.SESSION_LINK }}
+          DEBUG: ${{ vars.DEBUG }}
+
+      - name: Save changes
+        run: |
+          git config user.name "calendar-bot"
+          git config user.email "calendar-bot@users.noreply.github.com"
+          git add docs/events.json docs/calendar.ics
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Refresh calendar data"
+            git push
+          fi
