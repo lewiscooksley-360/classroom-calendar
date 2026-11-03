@@ -11,7 +11,7 @@ const API_BASE      = (process.env.API_BASE || 'https://app.360learning.com/api/
 const CLIENT_ID     = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const PLATFORM_URL  = (process.env.PLATFORM_URL || '').replace(/\/$/, '');   // e.g. https://yourcompany.360learning.com
-const SESSION_LINK  = process.env.SESSION_LINK || '';                        // optional fallback link for every event
+const SESSION_LINK  = process.env.SESSION_LINK || '';                        // optional fallback link if a session's IDs can't be found
 const DAYS_BACK     = Number(process.env.DAYS_BACK || 30);                   // how far back to include past sessions
 const DEBUG         = process.env.DEBUG === 'true';
 
@@ -79,6 +79,24 @@ const personName = (u) => {
   return full || u.name || u.fullName || u.mail || u.email || null;
 };
 
+// Finds the path ID and session ID anywhere inside a slot (e.g. in its "context"),
+// so each event can link to: PLATFORM_URL/paths/{pathId}/home?sessionId={sessionId}
+const HEX24 = /^[a-f0-9]{24}$/i;
+function findIds(obj) {
+  const found = { pathId: null, sessionId: null };
+  (function walk(o, keyPath) {
+    if (!o || typeof o !== 'object') return;
+    for (const [k, v] of Object.entries(o)) {
+      const p = keyPath ? `${keyPath}.${k}` : k;
+      if (typeof v === 'string' && HEX24.test(v)) {
+        if (/session/i.test(p) && !found.sessionId) found.sessionId = v;
+        else if (/path/i.test(p) && !/session/i.test(p) && !found.pathId) found.pathId = v;
+      } else if (v && typeof v === 'object') walk(v, p);
+    }
+  })(obj && obj.context ? { context: obj.context } : obj, '');
+  return found;
+}
+
 // ── Build the event list ────────────────────────────────────────────
 async function main() {
   const token = await getToken();
@@ -92,7 +110,7 @@ async function main() {
 
   const perClassroom = await mapLimit(classrooms, 4, async (c) => {
     const slots = await getAll(`/classrooms/${idOf(c)}/slots`, token);
-    if (DEBUG && slots[0]) console.log('Sample slot fields:', Object.keys(slots[0]).join(', '));
+    if (DEBUG && slots[0]) console.log('Sample slot context:', JSON.stringify(slots[0].context || {}), 'Link IDs:', JSON.stringify(findIds(slots[0])));
     return slots
       .filter((s) => s.startDate && new Date(s.endDate || s.startDate).getTime() >= cutoff)
       .map((s) => {
@@ -116,8 +134,10 @@ async function main() {
       .filter(Boolean);
     const location = slot.location || '';
     const isUrl = /^https?:\/\//i.test(location);
-    const pathId = slot.context?.pathId || slot.context?.path?._id || slot.context?.path?.id;
-    const link = SESSION_LINK || (PLATFORM_URL && pathId ? `${PLATFORM_URL}/paths/${pathId}` : PLATFORM_URL || '');
+    const { pathId, sessionId } = findIds(slot);
+    const link = PLATFORM_URL && pathId
+      ? `${PLATFORM_URL}/paths/${pathId}/home${sessionId ? `?sessionId=${sessionId}` : ''}`
+      : SESSION_LINK || PLATFORM_URL || '';
     return {
       id: idOf(slot),
       title: slot.name || classroom.name || classroom.title || 'Classroom session',
