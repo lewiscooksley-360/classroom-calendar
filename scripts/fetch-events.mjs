@@ -163,6 +163,18 @@ async function main() {
     return SESSION_LINK || PLATFORM_URL;
   };
 
+  // Count registrations for upcoming sessions (for "places left"). Uses classrooms:read.
+  const registered = {};
+  const now = Date.now();
+  await mapLimit(rows.filter(({ slot }) => new Date(slot.endDate || slot.startDate).getTime() >= now), 4, async ({ slot }) => {
+    const sid = idOf(slot);
+    try { registered[sid] = (await getAll(`/classroom-slots/${sid}/registrations?status=published`, token)).length; }
+    catch {
+      try { registered[sid] = (await getAll(`/classroom-slots/${sid}/registrations`, token)).filter((r) => !r.status || r.status === 'published').length; }
+      catch { registered[sid] = null; }
+    }
+  });
+
   const events = rows.map(({ classroom, slot }) => {
     const trainers = (slot.trainerIds || slot.trainers || [])
       .map((t) => (typeof t === 'string' ? names[t] : personName(t)))
@@ -183,6 +195,7 @@ async function main() {
       location: slot.virtual ? 'Virtual' : (isUrl ? '' : location),
       trainers,
       capacity: slot.maxCapacity ?? null,
+      registered: registered[idOf(slot)] ?? null,
       link,
     };
   }).sort((a, b) => a.start.localeCompare(b.start));

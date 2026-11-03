@@ -94,6 +94,19 @@
   .empty b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 4px; }
   .next-btn { margin-top: 12px; display: inline-flex; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--brand); }
 
+  /* places left */
+  .ev b { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+  .pl { font-style: normal; font-size: 10px; font-weight: 800; padding: 1px 6px; border-radius: 999px; background: #fff; color: var(--c); white-space: nowrap; }
+  .pl.low { background: #FFF1DC; color: #B26200; }
+  .pl.full { background: #FDE3E3; color: #C0392B; }
+  .places { margin-top: 10px; }
+  .places-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12.5px; color: var(--muted); }
+  .places-top b { font-size: 13px; color: var(--ink); }
+  .places-top b.low { color: #B26200; } .places-top b.full { color: #C0392B; }
+  .bar { margin-top: 6px; height: 7px; border-radius: 7px; background: #F1EAF0; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 7px; background: var(--c); transition: width .6s ease; }
+  .bar i.low { background: #F0A030; } .bar i.full { background: #E0544A; }
+
   @media (max-width: 980px) {
     .body { grid-template-columns: 1fr; }
     .grid { border-right: 0; }
@@ -151,6 +164,14 @@
   const t = (d) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const kind = (e) => (e.virtual ? 'virtual' : 'onsite');
   const shown = () => events.filter((e) => filters[kind(e)]);
+  // places left: returns null when the count isn't available
+  const places = (e) => {
+    if (e.registered == null) return null;
+    if (!e.capacity) return { taken: e.registered, cap: null, left: null, state: 'open' };
+    const left = Math.max(e.capacity - e.registered, 0);
+    return { taken: Math.min(e.registered, e.capacity), cap: e.capacity, left, state: left === 0 ? 'full' : left <= 3 ? 'low' : 'ok' };
+  };
+  const shortPlaces = (p) => (!p || p.cap == null ? '' : p.state === 'full' ? '<em class="pl full">Full</em>' : `<em class="pl ${p.state === 'low' ? 'low' : ''}">${p.left} left</em>`);
   const ic = {
     clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
     pin: '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-12a7 7 0 0 1 14 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>',
@@ -186,7 +207,7 @@
       const evs = list.filter((e) => same(e.s, d));
       const cls = ['day', d.getMonth() !== cursor.getMonth() && 'out', same(d, today) && 'is-today', same(d, selected) && 'sel', i % 7 > 4 && 'we'].filter(Boolean).join(' ');
       h += `<div class="${cls}" data-day="${d.getTime()}"><div class="day-head"><span class="num">${d.getDate()}</span>${evs.length ? `<span class="count">${evs.length}</span>` : ''}</div>`;
-      evs.slice(0, MAX_IN_CELL).forEach((e) => { h += `<button class="ev ${kind(e)}" data-id="${esc(e.id)}" title="${esc(e.title)}"><b>${t(e.s)}</b><span>${esc(e.title)}</span></button>`; });
+      evs.slice(0, MAX_IN_CELL).forEach((e) => { h += `<button class="ev ${kind(e)}" data-id="${esc(e.id)}" title="${esc(e.title)}"><b>${t(e.s)}${shortPlaces(places(e))}</b><span>${esc(e.title)}</span></button>`; });
       if (evs.length > MAX_IN_CELL) h += `<span class="more">+${evs.length - MAX_IN_CELL} more</span>`;
       if (evs.length) h += `<span class="dots">${evs.slice(0, 4).map((e) => `<i class="${kind(e)}"></i>`).join('')}</span>`;
       h += '</div>';
@@ -212,9 +233,14 @@
           <div>${ic.clock}${t(e.s)}–${t(e.en)}</div>
           <div>${e.virtual ? ic.screen + 'Virtual session' : ic.pin + esc(e.location || 'On site')}</div>
           ${e.trainers?.length ? `<div>${ic.user}${esc(e.trainers.join(', '))}</div>` : ''}
-          ${e.capacity ? `<div>${ic.seats}${e.capacity} places</div>` : ''}
         </div>
-        ${e.link ? `<a class="reg" href="${esc(e.link)}" target="_top">View and register ${ic.arrow}</a>` : ''}
+        ${(() => { const p = places(e);
+          if (!p) return e.capacity ? `<div class="meta" style="margin-top:5px"><div>${ic.seats}${e.capacity} places</div></div>` : '';
+          if (p.cap == null) return `<div class="places"><div class="places-top"><span>${ic.seats.replace('<svg', '<svg style="width:14px;height:14px;stroke:var(--c);fill:none;stroke-width:2.2;vertical-align:-2px;margin-right:6px"')}${p.taken} registered</span><b>Places available</b></div></div>`;
+          const label = p.state === 'full' ? 'Full' : `${p.left} place${p.left === 1 ? '' : 's'} left`;
+          return `<div class="places"><div class="places-top"><span>${p.taken} of ${p.cap} places taken</span><b class="${p.state}">${label}</b></div><div class="bar"><i class="${p.state}" style="width:${Math.round(p.taken / p.cap * 100)}%"></i></div></div>`;
+        })()}
+        ${e.link ? `<a class="reg" href="${esc(e.link)}" target="_top">${places(e)?.state === 'full' ? 'View session' : 'View and register'} ${ic.arrow}</a>` : ''}
       </div>`).join('');
     if (focusId) { const el = $('c-' + focusId); if (el) { el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); el.animate([{ boxShadow: '0 0 0 3px var(--c)' }, { boxShadow: '0 0 0 0 transparent' }], { duration: 1200 }); } }
   }
