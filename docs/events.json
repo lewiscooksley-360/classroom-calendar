@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T17:50:09.488Z",
+  "updatedAt": "2026-11-03T18:07:19.686Z",
   "sample": false,
   "events": [
     {
@@ -14,7 +14,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "684067acfb004b1031e6af6c",
@@ -28,7 +28,7 @@
       "location": "Board Room",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "69529e148d4105ad28fe0554",
@@ -42,7 +42,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "6953d074bf762ca88000d88f",
@@ -56,7 +56,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "684068130f5dcf5bc479b03b",
@@ -70,7 +70,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "69529e3291928d9a4804f203",
@@ -84,7 +84,7 @@
       "location": "Board Room, 17th Floor, Head Office",
       "trainers": [],
       "capacity": 12,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "68406823a959b812bf002150",
@@ -98,7 +98,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "6840675bf274677d4086f78f",
@@ -112,7 +112,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     },
     {
       "id": "6953d0876f6b1e5b4adc59ef",
@@ -126,7 +126,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "link": "https://trial-template-617.360learning.com/home/content/all"
+      "link": "https://trial-template-617.360learning.com"
     }
   ]
 }
