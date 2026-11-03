@@ -1,0 +1,198 @@
+{
+  "updatedAt": "2026-11-03T17:05:05.899214Z",
+  "sample": true,
+  "events": [
+    {
+      "id": "sample03",
+      "title": "Coaching Conversations for Managers #1",
+      "classroom": "Coaching Conversations",
+      "start": "2026-11-12T09:00:00.000Z",
+      "end": "2026-11-12T11:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 2,
+      "virtual": false,
+      "location": "Meeting Room 4, Paris",
+      "trainers": [
+        "Coline Moulin"
+      ],
+      "capacity": 10,
+      "link": ""
+    },
+    {
+      "id": "sample04",
+      "title": "New Starter Welcome Session",
+      "classroom": "Getting Started: Your Onboarding Path",
+      "start": "2026-11-18T13:00:00.000Z",
+      "end": "2026-11-18T14:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Leo Foster"
+      ],
+      "capacity": 40,
+      "link": ""
+    },
+    {
+      "id": "sample12",
+      "title": "Data Privacy Essentials",
+      "classroom": "Compliance Essentials",
+      "start": "2026-11-26T09:00:00.000Z",
+      "end": "2026-11-26T10:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Coline Moulin"
+      ],
+      "capacity": 60,
+      "link": ""
+    },
+    {
+      "id": "sample01",
+      "title": "Reporting and Dashboarding Deep Dive #1",
+      "classroom": "Reporting and Dashboarding Deep Dive",
+      "start": "2026-11-26T10:00:00.000Z",
+      "end": "2026-11-26T11:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": false,
+      "location": "Training Room 2, London HQ",
+      "trainers": [
+        "John Terry"
+      ],
+      "capacity": 12,
+      "link": ""
+    },
+    {
+      "id": "sample11",
+      "title": "Feedback that Lands",
+      "classroom": "Coaching Conversations",
+      "start": "2026-11-26T12:00:00.000Z",
+      "end": "2026-11-26T13:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": false,
+      "location": "Meeting Room 3, London HQ",
+      "trainers": [
+        "Karl Schmidt"
+      ],
+      "capacity": 10,
+      "link": ""
+    },
+    {
+      "id": "sample02",
+      "title": "Instructional Design Meets Technology: Best Practices in LMS Course Creation #1",
+      "classroom": "Instructional Design Meets Technology",
+      "start": "2026-11-26T14:00:00.000Z",
+      "end": "2026-11-26T15:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Karl Schmidt"
+      ],
+      "capacity": 30,
+      "link": ""
+    },
+    {
+      "id": "sample10",
+      "title": "Reporting and Dashboarding Deep Dive #2",
+      "classroom": "Reporting and Dashboarding Deep Dive",
+      "start": "2026-11-26T16:00:00.000Z",
+      "end": "2026-11-26T17:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "John Terry"
+      ],
+      "capacity": 25,
+      "link": ""
+    },
+    {
+      "id": "sample07",
+      "title": "Presentation Skills Workshop",
+      "classroom": "Presentation Skills",
+      "start": "2026-12-03T09:00:00.000Z",
+      "end": "2026-12-03T12:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 3,
+      "virtual": false,
+      "location": "Training Room 1, London HQ",
+      "trainers": [
+        "John Terry"
+      ],
+      "capacity": 14,
+      "link": ""
+    },
+    {
+      "id": "sample05",
+      "title": "Instructional Design Meets Technology: Best Practices in LMS Course Creation #2",
+      "classroom": "Instructional Design Meets Technology",
+      "start": "2026-12-17T10:00:00.000Z",
+      "end": "2026-12-17T11:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Leo Foster"
+      ],
+      "capacity": 30,
+      "link": ""
+    },
+    {
+      "id": "sample06",
+      "title": "AI & Automation in the LMS Industry: The Future of Personalized Learning? #1",
+      "classroom": "AI & Automation in the LMS Industry",
+      "start": "2026-12-24T11:00:00.000Z",
+      "end": "2026-12-24T12:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Coline Moulin"
+      ],
+      "capacity": 50,
+      "link": ""
+    },
+    {
+      "id": "sample08",
+      "title": "Company Culture Webinar #2",
+      "classroom": "Getting Started: Your Onboarding Path",
+      "start": "2027-01-07T15:00:00.000Z",
+      "end": "2027-01-07T16:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": false,
+      "location": "Auditorium, London HQ",
+      "trainers": [
+        "Leo Foster"
+      ],
+      "capacity": 80,
+      "link": ""
+    },
+    {
+      "id": "sample09",
+      "title": "AI & Automation in the LMS Industry: The Future of Personalized Learning? #2",
+      "classroom": "AI & Automation in the LMS Industry",
+      "start": "2027-01-20T11:00:00.000Z",
+      "end": "2027-01-20T12:00:00.000Z",
+      "timezone": "Europe/London",
+      "durationHours": 1,
+      "virtual": true,
+      "location": "Virtual",
+      "trainers": [
+        "Coline Moulin"
+      ],
+      "capacity": 50,
+      "link": ""
+    }
+  ]
+}

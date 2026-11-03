@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Classroom Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── BRAND: change these to rebrand for a customer ── */
+  :root {
+    --brand: #4A1235;          /* header, selected day */
+    --brand-2: #8B2C5F;        /* header gradient */
+    --accent: #E8508A;         /* today */
+    --virtual: #6D4AE0;        /* virtual sessions */
+    --virtual-bg: #EEE9FD;
+    --onsite: #0F8A6A;         /* on-site sessions */
+    --onsite-bg: #E2F5EF;
+    --ink: #1D1420;
+    --muted: #6E6372;
+    --line: #ECE4EA;
+    --soft: #FBF7FA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: transparent; }
+  body { font-family: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; padding: 4px; }
+  button { font: inherit; cursor: pointer; border: 0; background: none; color: inherit; text-align: left; }
+
+  .cal { background: #fff; border: 1px solid var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 10px 30px rgba(74,18,53,.06); }
+
+  /* ── header: month name is the hero ── */
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 20px 24px; color: #fff;
+    background: radial-gradient(ellipse 45% 140% at 100% 0%, rgba(232,80,138,.4), transparent 70%), linear-gradient(120deg, var(--brand), var(--brand-2)); }
+  .month { display: flex; align-items: center; gap: 14px; }
+  .month h1 { font-size: 30px; font-weight: 800; letter-spacing: -.8px; line-height: 1; }
+  .month h1 span { font-weight: 400; opacity: .75; }
+  .month small { display: flex; align-items: center; gap: 7px; margin-top: 6px; font-size: 12.5px; opacity: .85; }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: #5EF2B5; animation: ping 2s ease-out infinite; }
+  .live.off { background: #F5C26B; animation: none; }
+  @keyframes ping { 0% { box-shadow: 0 0 0 0 rgba(94,242,181,.7); } 100% { box-shadow: 0 0 0 9px rgba(94,242,181,0); } }
+  .navs { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .circ { width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); transition: background .2s; }
+  .circ:hover { background: rgba(255,255,255,.28); }
+  .circ svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .pill { display: inline-flex; align-items: center; gap: 7px; height: 38px; padding: 0 15px; border-radius: 999px; font-size: 13px; font-weight: 700; color: #fff; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.25); text-decoration: none; }
+  .pill:hover { background: rgba(255,255,255,.28); }
+  .pill svg { width: 15px; height: 15px; stroke: #fff; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .pill.f { opacity: .55; } .pill.f.on { opacity: 1; background: #fff; color: var(--ink); }
+  .pill.f i { width: 9px; height: 9px; border-radius: 50%; background: var(--c); }
+
+  .note { padding: 9px 24px; font-size: 12.5px; color: #8A5A00; background: #FFF6E0; border-bottom: 1px solid #F6E2B3; }
+
+  /* ── body: calendar + day panel ── */
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; }
+  .grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); border-right: 1px solid var(--line); }
+  .dow { padding: 12px 10px 10px; font-size: 11.5px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); text-align: center; border-bottom: 1px solid var(--line); background: var(--soft); }
+  .dow.we { color: #B6AEB8; }
+  .day { position: relative; min-height: 132px; padding: 8px 7px 8px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 4px; cursor: pointer; transition: background .15s; }
+  .day:nth-child(7n) { border-right: 0; }
+  .day:hover { background: #FDF9FC; }
+  .day.out { background: var(--soft); }
+  .day.out .num { opacity: .35; }
+  .day.we:not(.out) { background: #FEFCFD; }
+  .day.sel { background: #FBF1F6; box-shadow: inset 0 0 0 2px var(--brand); }
+  .day-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2px; }
+  .num { font-size: 14px; font-weight: 800; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .day.is-today .num { background: var(--accent); color: #fff; box-shadow: 0 4px 10px rgba(232,80,138,.4); }
+  .count { font-size: 11px; font-weight: 800; color: var(--brand); background: #F6E6EF; padding: 2px 8px; border-radius: 999px; }
+  .ev { display: block; width: 100%; padding: 5px 7px 5px 8px; border-radius: 8px; background: var(--bg); border-left: 3px solid var(--c); transition: transform .15s, box-shadow .15s; }
+  .ev:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(29,20,32,.12); }
+  .ev b { display: block; font-size: 11px; font-weight: 800; color: var(--c); }
+  .ev span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 12px; font-weight: 600; line-height: 1.3; }
+  .more { font-size: 12px; font-weight: 800; color: var(--brand); padding: 2px 4px; }
+  .virtual { --c: var(--virtual); --bg: var(--virtual-bg); }
+  .onsite  { --c: var(--onsite);  --bg: var(--onsite-bg); }
+
+  /* day panel */
+  .side { display: flex; flex-direction: column; background: var(--soft); }
+  .side-head { padding: 18px 20px 14px; border-bottom: 1px solid var(--line); background: #fff; }
+  .side-head small { font-size: 11.5px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; color: var(--muted); }
+  .side-head h2 { font-size: 20px; font-weight: 800; letter-spacing: -.4px; margin-top: 3px; }
+  .side-list { padding: 14px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; max-height: 760px; }
+  .card { display: block; width: 100%; background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px; border-top: 4px solid var(--c); transition: box-shadow .2s, transform .2s; }
+  .card:hover { box-shadow: 0 10px 22px rgba(29,20,32,.1); transform: translateY(-2px); }
+  .card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--bg); color: var(--c); }
+  .tag.plain { background: var(--soft); color: var(--muted); border: 1px solid var(--line); }
+  .card h3 { font-size: 14.5px; font-weight: 800; line-height: 1.3; margin: 8px 0 8px; }
+  .meta { display: flex; flex-direction: column; gap: 5px; font-size: 12.5px; color: var(--muted); }
+  .meta div { display: flex; align-items: center; gap: 7px; }
+  .meta svg { flex: none; width: 14px; height: 14px; stroke: var(--c); fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .reg { margin-top: 12px; display: flex; align-items: center; justify-content: center; gap: 7px; padding: 9px; border-radius: 999px; background: var(--c); color: #fff; font-size: 13px; font-weight: 800; text-decoration: none; }
+  .reg svg { width: 14px; height: 14px; stroke: #fff; fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .empty { padding: 30px 16px; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
+  .empty b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 4px; }
+  .next-btn { margin-top: 12px; display: inline-flex; padding: 8px 14px; border-radius: 999px; background: #fff; border: 1px solid var(--line); font-size: 13px; font-weight: 700; color: var(--brand); }
+
+  @media (max-width: 980px) {
+    .body { grid-template-columns: 1fr; }
+    .grid { border-right: 0; }
+    .side-list { max-height: none; }
+  }
+  @media (max-width: 640px) {
+    .top { padding: 16px; }
+    .month h1 { font-size: 24px; }
+    .day { min-height: 62px; padding: 5px 3px; align-items: center; }
+    .day-head { justify-content: center; }
+    .count, .ev, .more { display: none; }
+    .dots { display: flex !important; }
+    .dow { padding: 10px 2px; font-size: 10px; letter-spacing: .5px; }
+  }
+  .dots { display: none; gap: 3px; justify-content: center; flex-wrap: wrap; }
+  .dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="cal">
+  <div class="top">
+    <div class="month">
+      <div><h1 id="label"></h1><small><span class="live" id="liveDot"></span><span id="updated">Loading…</span></small></div>
+    </div>
+    <div class="navs">
+      <button class="circ" id="prev" aria-label="Previous month"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="pill" id="today">Today</button>
+      <button class="circ" id="next" aria-label="Next month"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></button>
+      <button class="pill f on" data-f="virtual" style="--c:#B9A6FF"><i></i>Virtual</button>
+      <button class="pill f on" data-f="onsite" style="--c:#7FE0C2"><i></i>On site</button>
+      <a class="pill" href="calendar.ics" title="Add to Outlook or Google Calendar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>Subscribe</a>
+    </div>
+  </div>
+  <div class="note" id="sampleNote" hidden>Showing sample data. Real sessions appear after the first refresh with your API credentials.</div>
+  <div class="body">
+    <div class="grid" id="grid"></div>
+    <aside class="side"><div class="side-head"><small id="sideSmall"></small><h2 id="sideTitle"></h2></div><div class="side-list" id="sideList"></div></aside>
+  </div>
+</div>
+
+<script>
+(() => {
+  const DATA_URL = 'events.json';
+  const REFRESH_MINUTES = 5;
+  const MAX_IN_CELL = 3;
+
+  let events = [], cursor = som(new Date()), selected = startOfDay(new Date());
+  const filters = { virtual: true, onsite: true };
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  function som(d) { return new Date(d.getFullYear(), d.getMonth(), 1); }
+  function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  const same = (a, b) => a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  const t = (d) => d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  const kind = (e) => (e.virtual ? 'virtual' : 'onsite');
+  const shown = () => events.filter((e) => filters[kind(e)]);
+  const ic = {
+    clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    pin: '<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.3-7-12a7 7 0 0 1 14 0c0 5.7-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>',
+    screen: '<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>',
+    user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>',
+    seats: '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  };
+
+  async function load() {
+    try {
+      const data = await (await fetch(`${DATA_URL}?t=${Date.now()}`, { cache: 'no-store' })).json();
+      events = (data.events || []).map((e) => ({ ...e, s: new Date(e.start), en: new Date(e.end || e.start) })).sort((a, b) => a.s - b.s);
+      $('sampleNote').hidden = !data.sample;
+      const mins = Math.round((Date.now() - new Date(data.updatedAt)) / 60000);
+      $('updated').textContent = `Live · updated ${mins < 1 ? 'just now' : mins < 60 ? mins + ' min ago' : new Date(data.updatedAt).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' })}`;
+      $('liveDot').classList.toggle('off', mins > 60);
+      // first load: if today is empty, select the next day that has a session
+      if (!load.done) { load.done = true; if (!events.some((e) => same(e.s, selected))) { const nxt = events.find((e) => e.en >= new Date()); if (nxt) { selected = startOfDay(nxt.s); cursor = som(nxt.s); } } }
+      render();
+    } catch { $('updated').textContent = 'Could not load sessions'; $('liveDot').classList.add('off'); }
+  }
+
+  function render() {
+    $('label').innerHTML = `${cursor.toLocaleDateString([], { month: 'long' })} <span>${cursor.getFullYear()}</span>`;
+    const first = new Date(cursor), offset = (first.getDay() + 6) % 7;
+    const start = new Date(first); start.setDate(1 - offset);
+    const today = new Date(), list = shown();
+    let h = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((d, i) => `<div class="dow${i > 4 ? ' we' : ''}">${d}</div>`).join('');
+    for (let i = 0; i < 42; i++) {
+      const d = new Date(start); d.setDate(start.getDate() + i);
+      if (i === 35 && d.getMonth() !== cursor.getMonth()) break;
+      const evs = list.filter((e) => same(e.s, d));
+      const cls = ['day', d.getMonth() !== cursor.getMonth() && 'out', same(d, today) && 'is-today', same(d, selected) && 'sel', i % 7 > 4 && 'we'].filter(Boolean).join(' ');
+      h += `<div class="${cls}" data-day="${d.getTime()}"><div class="day-head"><span class="num">${d.getDate()}</span>${evs.length ? `<span class="count">${evs.length}</span>` : ''}</div>`;
+      evs.slice(0, MAX_IN_CELL).forEach((e) => { h += `<button class="ev ${kind(e)}" data-id="${esc(e.id)}" title="${esc(e.title)}"><b>${t(e.s)}</b><span>${esc(e.title)}</span></button>`; });
+      if (evs.length > MAX_IN_CELL) h += `<span class="more">+${evs.length - MAX_IN_CELL} more</span>`;
+      if (evs.length) h += `<span class="dots">${evs.slice(0, 4).map((e) => `<i class="${kind(e)}"></i>`).join('')}</span>`;
+      h += '</div>';
+    }
+    $('grid').innerHTML = h;
+    renderSide();
+  }
+
+  function renderSide(focusId) {
+    const evs = shown().filter((e) => same(e.s, selected));
+    $('sideSmall').textContent = same(selected, new Date()) ? 'Today' : selected.toLocaleDateString([], { weekday: 'long' });
+    $('sideTitle').textContent = selected.toLocaleDateString([], { day: 'numeric', month: 'long', year: 'numeric' });
+    if (!evs.length) {
+      const nxt = shown().find((e) => e.s > selected);
+      $('sideList').innerHTML = `<div class="empty"><b>No sessions on this day</b>Pick another day on the calendar.${nxt ? `<br><button class="next-btn" data-jump="${startOfDay(nxt.s).getTime()}">Next session: ${nxt.s.toLocaleDateString([], { day: 'numeric', month: 'short' })}</button>` : ''}</div>`;
+      return;
+    }
+    $('sideList').innerHTML = evs.map((e) => `
+      <div class="card ${kind(e)}" id="c-${esc(e.id)}">
+        <div class="tags"><span class="tag">${e.virtual ? 'Virtual' : 'On site'}</span>${e.durationHours ? `<span class="tag plain">${e.durationHours}h</span>` : ''}</div>
+        <h3>${esc(e.title)}</h3>
+        <div class="meta">
+          <div>${ic.clock}${t(e.s)}–${t(e.en)}</div>
+          <div>${e.virtual ? ic.screen + 'Virtual session' : ic.pin + esc(e.location || 'On site')}</div>
+          ${e.trainers?.length ? `<div>${ic.user}${esc(e.trainers.join(', '))}</div>` : ''}
+          ${e.capacity ? `<div>${ic.seats}${e.capacity} places</div>` : ''}
+        </div>
+        ${e.link ? `<a class="reg" href="${esc(e.link)}" target="_top">View and register ${ic.arrow}</a>` : ''}
+      </div>`).join('');
+    if (focusId) { const el = $('c-' + focusId); if (el) { el.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); el.animate([{ boxShadow: '0 0 0 3px var(--c)' }, { boxShadow: '0 0 0 0 transparent' }], { duration: 1200 }); } }
+  }
+
+  document.addEventListener('click', (ev) => {
+    const evBtn = ev.target.closest('.ev'), day = ev.target.closest('[data-day]'), jump = ev.target.closest('[data-jump]'), f = ev.target.closest('[data-f]');
+    if (jump) { selected = new Date(+jump.dataset.jump); cursor = som(selected); render(); return; }
+    if (f) {
+      const k = f.dataset.f; filters[k] = !filters[k];
+      if (!filters.virtual && !filters.onsite) filters[k === 'virtual' ? 'onsite' : 'virtual'] = true;
+      document.querySelectorAll('[data-f]').forEach((b) => b.classList.toggle('on', filters[b.dataset.f]));
+      render(); return;
+    }
+    if (day) {
+      const d = new Date(+day.dataset.day);
+      selected = d; if (d.getMonth() !== cursor.getMonth()) cursor = som(d);
+      render(); if (evBtn) renderSide(evBtn.dataset.id);
+      if (window.innerWidth <= 980) document.querySelector('.side').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+  $('prev').onclick = () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() - 1, 1); render(); };
+  $('next').onclick = () => { cursor = new Date(cursor.getFullYear(), cursor.getMonth() + 1, 1); render(); };
+  $('today').onclick = () => { cursor = som(new Date()); selected = startOfDay(new Date()); render(); };
+
+  load();
+  setInterval(load, REFRESH_MINUTES * 60000);
+})();
+</script>
+</body>
+</html>
