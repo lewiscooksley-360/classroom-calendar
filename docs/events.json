@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T18:07:19.686Z",
+  "updatedAt": "2026-11-03T18:13:16.216Z",
   "sample": false,
   "events": [
     {
@@ -128,5 +128,71 @@
       "capacity": null,
       "link": "https://trial-template-617.360learning.com"
     }
-  ]
+  ],
+  "debug": {
+    "trainerIdsFound": 7,
+    "classroomSample": {
+      "_id": "6784fb8c1732e7e43b359755",
+      "createdAt": "2025-01-13T11:39:56.000Z",
+      "modifiedAt": "1970-01-01T00:00:00.000Z",
+      "name": "Company Culture Webinar",
+      "groupId": "672253e713bcb7967eae9575",
+      "mediaIds": [],
+      "trainingObjective": "Understand the company culture, what we are doing to improve your way of working. This is also your chance to ask any questions\n\n\n"
+    },
+    "slotSamples": [
+      {
+        "_id": "68e3c8eac642388de81bc632",
+        "classroomId": "6784fb8c1732e7e43b359755",
+        "context": {
+          "_id": "6784fb39d4a7b480fa9c1d5b",
+          "type": "path"
+        },
+        "createdAt": "2025-10-06T13:49:30.552Z",
+        "modifiedAt": "2026-11-03T16:34:24.288Z",
+        "name": "Company Culture Webinar #1",
+        "startDate": "2025-08-07T14:00:00.000Z",
+        "endDate": "2025-08-07T15:00:00.000Z",
+        "location": "[hidden]",
+        "reportedDuration": 1,
+        "selfRegistration": {
+          "enabled": true,
+          "cutoffDate": "2025-08-07T14:00:00.000Z"
+        },
+        "virtual": true,
+        "mediaIds": [],
+        "trainerIds": [],
+        "timezone": "Europe/London"
+      },
+      {
+        "_id": "684062ac82da2c23a44863ac",
+        "classroomId": "678514ce9deb2944c1bc17d1",
+        "context": {
+          "_id": "678512bf506bd0fd0d76bf7b",
+          "type": "path"
+        },
+        "createdAt": "2025-06-04T15:13:48.000Z",
+        "modifiedAt": "1970-01-01T00:00:00.000Z",
+        "name": "Handling Customer Complaints and Returns #1",
+        "startDate": "2025-04-08T10:00:00.000Z",
+        "endDate": "2025-04-08T11:00:00.000Z",
+        "location": "[hidden]",
+        "reportedDuration": 1,
+        "selfRegistration": {
+          "enabled": true,
+          "cutoffDate": "2025-04-08T10:00:00.000Z"
+        },
+        "virtual": true,
+        "mediaIds": [],
+        "trainerIds": [
+          "6724b3d5a35a9241c22fea4b"
+        ],
+        "timezone": "Europe/London"
+      }
+    ],
+    "userLookup": {
+      "ok": false,
+      "error": "GET https://app.360learning.com/api/v2/users/6724b3d2cc3b18b85b7be496 failed: 403 {\"error\":\"invalid_scope\"}"
+    }
+  }
 }
