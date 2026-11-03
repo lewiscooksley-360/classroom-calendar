@@ -107,10 +107,13 @@ async function main() {
 
   const cutoff = Date.now() - DAYS_BACK * 864e5;
   const trainerIds = new Set();
+  const debugInfo = { classroomSample: null, slotSamples: [], userLookup: null };
+  const strip = (o) => JSON.parse(JSON.stringify(o, (k, v) => (/location|url|link/i.test(k) ? '[hidden]' : v)));
+  if (DEBUG && classrooms[0]) debugInfo.classroomSample = strip(classrooms[0]);
 
   const perClassroom = await mapLimit(classrooms, 4, async (c) => {
     const slots = await getAll(`/classrooms/${idOf(c)}/slots`, token);
-    if (DEBUG && slots[0]) console.log('Sample slot context:', JSON.stringify(slots[0].context || {}), 'Link IDs:', JSON.stringify(findIds(slots[0])));
+    if (DEBUG && slots[0] && debugInfo.slotSamples.length < 2) debugInfo.slotSamples.push(strip(slots[0]));
     return slots
       .filter((s) => s.startDate && new Date(s.endDate || s.startDate).getTime() >= cutoff)
       .map((s) => {
@@ -124,8 +127,14 @@ async function main() {
   // Resolve trainer names (needs the users:read scope; skipped quietly if not allowed)
   const names = {};
   await mapLimit([...trainerIds], 4, async (uid) => {
-    try { names[uid] = personName((await apiGet(`${API_BASE}/users/${uid}`, token)).body); }
-    catch { names[uid] = null; }
+    try {
+      const u = (await apiGet(`${API_BASE}/users/${uid}`, token)).body;
+      names[uid] = personName(u);
+      if (DEBUG && !debugInfo.userLookup) debugInfo.userLookup = { ok: true, fields: Object.keys(u) };
+    } catch (err) {
+      names[uid] = null;
+      if (DEBUG && !debugInfo.userLookup) debugInfo.userLookup = { ok: false, error: String(err.message).slice(0, 200) };
+    }
   });
 
   const events = rows.map(({ classroom, slot }) => {
@@ -156,7 +165,7 @@ async function main() {
   }).sort((a, b) => a.start.localeCompare(b.start));
 
   await mkdir('docs', { recursive: true });
-  await writeFile('docs/events.json', JSON.stringify({ updatedAt: new Date().toISOString(), sample: false, events }, null, 2));
+  await writeFile('docs/events.json', JSON.stringify({ updatedAt: new Date().toISOString(), sample: false, events, ...(DEBUG ? { debug: { trainerIdsFound: trainerIds.size, ...debugInfo } } : {}) }, null, 2));
   await writeFile('docs/calendar.ics', toICS(events));
   console.log(`Wrote ${events.length} events to docs/events.json and docs/calendar.ics.`);
 }
