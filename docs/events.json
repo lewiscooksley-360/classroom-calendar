@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-03T18:23:29.067Z",
+  "updatedAt": "2026-11-03T19:01:34.843Z",
   "sample": false,
   "events": [
     {
@@ -16,6 +16,7 @@
         "Karl Schmidt"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/6840663efbce8be12b9348ea/home?sessionId=684066a80c294ef40c958a11"
     },
     {
@@ -32,6 +33,7 @@
         "John Terry"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/68406761938674a87126bb05/home?sessionId=68406792232e00b6f4d77036"
     },
     {
@@ -48,6 +50,7 @@
         "Coline Moulin"
       ],
       "capacity": null,
+      "registered": 12,
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
@@ -64,6 +67,7 @@
         "Leo Foster"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/6840663efbce8be12b9348ea/home?sessionId=684066a80c294ef40c958a11"
     },
     {
@@ -81,6 +85,7 @@
         "Justine Guillaume"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/684067c70f6bf278a1d4cee7/home?sessionId=68406800f890f5f534aeadd0"
     },
     {
@@ -97,6 +102,7 @@
         "Leo Foster"
       ],
       "capacity": 12,
+      "registered": 10,
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
@@ -114,6 +120,7 @@
         "Justine Guillaume"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/684067c70f6bf278a1d4cee7/home?sessionId=68406800f890f5f534aeadd0"
     },
     {
@@ -130,6 +137,7 @@
         "Charlotte Schulz"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/684067045d6751712053432d/home?sessionId=684067321faa820bce216ced"
     },
     {
@@ -146,6 +154,7 @@
         "Coline Moulin"
       ],
       "capacity": null,
+      "registered": 0,
       "link": "https://trial-template-617.360learning.com/paths/6840663efbce8be12b9348ea/home?sessionId=684066a80c294ef40c958a11"
     }
   ],
