@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T08:30:58.594Z",
+  "updatedAt": "2026-11-04T09:55:29.856Z",
   "sample": false,
   "events": [
     {
@@ -178,7 +178,7 @@
           "type": "path"
         },
         "createdAt": "2025-10-06T13:49:30.552Z",
-        "modifiedAt": "2026-11-03T16:34:24.288Z",
+        "modifiedAt": "2026-11-04T08:34:30.592Z",
         "name": "Company Culture Webinar #1",
         "startDate": "2025-08-07T14:00:00.000Z",
         "endDate": "2025-08-07T15:00:00.000Z",
@@ -236,8 +236,8 @@
     },
     "pathLookup": {
       "ok": true,
-      "paths": 19,
-      "sessions": 22
+      "paths": 20,
+      "sessions": 23
     }
   }
 }
