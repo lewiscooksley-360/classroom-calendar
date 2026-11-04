@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T02:43:29.996Z",
+  "updatedAt": "2026-11-04T08:30:58.594Z",
   "sample": false,
   "events": [
     {
@@ -38,19 +38,19 @@
     },
     {
       "id": "69529e148d4105ad28fe0554",
-      "title": "Company Culture Webinar #1",
-      "classroom": "Company Culture Webinar",
+      "title": "Meet the ELT at HQ! #1",
+      "classroom": "Meet the ELT at HQ!",
       "start": "2026-12-03T15:00:00.000Z",
       "end": "2026-12-03T16:00:00.000Z",
       "timezone": "Europe/London",
       "durationHours": 1,
-      "virtual": true,
-      "location": "Virtual",
+      "virtual": false,
+      "location": "HQ Office",
       "trainers": [
         "Coline Moulin"
       ],
-      "capacity": null,
-      "registered": 12,
+      "capacity": 10,
+      "registered": 10,
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
@@ -90,8 +90,8 @@
     },
     {
       "id": "69529e3291928d9a4804f203",
-      "title": "Company Culture Webinar #2",
-      "classroom": "Company Culture Webinar",
+      "title": "Meet the ELT at HQ! #2",
+      "classroom": "Meet the ELT at HQ!",
       "start": "2027-01-07T15:00:00.000Z",
       "end": "2027-01-07T16:00:00.000Z",
       "timezone": "Europe/London",
@@ -101,8 +101,8 @@
       "trainers": [
         "Leo Foster"
       ],
-      "capacity": 12,
-      "registered": 10,
+      "capacity": 10,
+      "registered": 8,
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
@@ -163,8 +163,8 @@
     "classroomSample": {
       "_id": "6784fb8c1732e7e43b359755",
       "createdAt": "2025-01-13T11:39:56.000Z",
-      "modifiedAt": "1970-01-01T00:00:00.000Z",
-      "name": "Company Culture Webinar",
+      "modifiedAt": "2026-11-04T08:29:49.917Z",
+      "name": "Meet the ELT at HQ!",
       "groupId": "672253e713bcb7967eae9575",
       "mediaIds": [],
       "trainingObjective": "Understand the company culture, what we are doing to improve your way of working. This is also your chance to ask any questions\n\n\n"
