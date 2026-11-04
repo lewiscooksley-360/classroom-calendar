@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-04T17:47:21.318Z",
+  "updatedAt": "2026-11-04T23:14:30.089Z",
   "sample": false,
   "events": [
     {
@@ -194,28 +194,26 @@
         "timezone": "Europe/London"
       },
       {
-        "_id": "684062ac82da2c23a44863ac",
-        "classroomId": "678514ce9deb2944c1bc17d1",
+        "_id": "68e3cb152355823a4fff5c25",
+        "classroomId": "67851867fc099e3c74a5cd7f",
         "context": {
-          "_id": "678512bf506bd0fd0d76bf7b",
+          "_id": "67851ba37d5502a3908a879b",
           "type": "path"
         },
-        "createdAt": "2025-06-04T15:13:48.000Z",
-        "modifiedAt": "1970-01-01T00:00:00.000Z",
-        "name": "Handling Customer Complaints and Returns #1",
-        "startDate": "2025-04-08T10:00:00.000Z",
-        "endDate": "2025-04-08T11:00:00.000Z",
+        "createdAt": "2025-10-06T13:58:45.757Z",
+        "modifiedAt": "2025-10-06T13:58:45.757Z",
+        "name": "Objection Handling #1",
+        "startDate": "2025-07-09T14:00:00.000Z",
+        "endDate": "2025-07-09T15:00:00.000Z",
         "location": "[hidden]",
         "reportedDuration": 1,
         "selfRegistration": {
           "enabled": true,
-          "cutoffDate": "2025-04-08T10:00:00.000Z"
+          "cutoffDate": "2025-07-09T14:00:00.000Z"
         },
         "virtual": true,
         "mediaIds": [],
-        "trainerIds": [
-          "6724b3d5a35a9241c22fea4b"
-        ],
+        "trainerIds": [],
         "timezone": "Europe/London"
       }
     ],
