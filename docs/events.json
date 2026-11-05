@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-05T11:31:52.289Z",
+  "updatedAt": "2026-11-05T18:58:52.909Z",
   "sample": false,
   "events": [
     {
@@ -102,7 +102,7 @@
         "Leo Foster"
       ],
       "capacity": 10,
-      "registered": 8,
+      "registered": 10,
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
@@ -178,7 +178,7 @@
           "type": "path"
         },
         "createdAt": "2025-10-06T13:49:30.552Z",
-        "modifiedAt": "2026-11-04T08:34:30.592Z",
+        "modifiedAt": "2026-11-05T12:40:37.593Z",
         "name": "Company Culture Webinar #1",
         "startDate": "2025-08-07T14:00:00.000Z",
         "endDate": "2025-08-07T15:00:00.000Z",
