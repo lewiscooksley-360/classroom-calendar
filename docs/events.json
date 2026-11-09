@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-09T02:01:38.945Z",
+  "updatedAt": "2026-11-09T09:48:19.991Z",
   "sample": false,
   "events": [
     {
@@ -236,8 +236,8 @@
     },
     "pathLookup": {
       "ok": true,
-      "paths": 20,
-      "sessions": 23
+      "paths": 21,
+      "sessions": 24
     }
   }
 }
