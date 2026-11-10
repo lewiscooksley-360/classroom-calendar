@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-10T10:46:40.599Z",
+  "updatedAt": "2026-11-10T18:28:48.002Z",
   "sample": false,
   "events": [
     {
@@ -106,6 +106,23 @@
       "link": "https://trial-template-617.360learning.com/paths/677ffb2ea3382395b90b75fc/home?sessionId=69529dbce2cd1cd78a73cf40"
     },
     {
+      "id": "6af330d3c82336f2192c4b00",
+      "title": "Let's Connect",
+      "classroom": "Let's Connect ",
+      "start": "2027-01-15T10:30:00.000Z",
+      "end": "2027-01-15T12:00:00.000Z",
+      "timezone": "Europe/Brussels",
+      "durationHours": 1.5,
+      "virtual": false,
+      "location": "MTV-Amicorum",
+      "trainers": [
+        "Sarah Verwimp"
+      ],
+      "capacity": null,
+      "registered": 2,
+      "link": "https://trial-template-617.360learning.com/paths/6af32d8621f58f5c142eff74/home?sessionId=6af32dc5a021458a57d60008"
+    },
+    {
       "id": "68406823a959b812bf002150",
       "title": "AI & Automation in the LMS Industry: The Future of Personalized Learning? #2",
       "classroom": "AI & Automation in the LMS Industry: The Future of Personalized Learning?",
@@ -159,7 +176,7 @@
     }
   ],
   "debug": {
-    "trainerIdsFound": 7,
+    "trainerIdsFound": 8,
     "classroomSample": {
       "_id": "6784fb8c1732e7e43b359755",
       "createdAt": "2025-01-13T11:39:56.000Z",
@@ -236,8 +253,8 @@
     },
     "pathLookup": {
       "ok": true,
-      "paths": 23,
-      "sessions": 25
+      "paths": 26,
+      "sessions": 27
     }
   }
 }
