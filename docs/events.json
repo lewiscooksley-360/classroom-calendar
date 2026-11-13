@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-13T10:32:33.374Z",
+  "updatedAt": "2026-11-13T18:05:09.240Z",
   "sample": false,
   "events": [
     {
@@ -14,7 +14,7 @@
       "location": "Amicorum, Tomorrowland HQ",
       "trainers": [],
       "capacity": null,
-      "registered": 0,
+      "registered": null,
       "link": "https://trial-template-617.360learning.com/paths/6af32d8621f58f5c142eff74/home?sessionId=6af32dc5a021458a57d60008"
     },
     {
