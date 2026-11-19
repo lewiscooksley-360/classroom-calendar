@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T13:42:34.163Z",
+  "updatedAt": "2026-11-19T21:50:25.825Z",
   "sample": false,
   "events": [
     {
@@ -46,7 +46,7 @@
       "location": "hq",
       "trainers": [],
       "capacity": null,
-      "registered": 0,
+      "registered": null,
       "link": "https://trial-template-617.360learning.com/paths/6afda8e402f35a98349698d3/home?sessionId=6afda91d608330af4bb49eb2"
     },
     {
@@ -391,7 +391,7 @@
           "type": "path"
         },
         "createdAt": "2025-10-06T13:49:30.552Z",
-        "modifiedAt": "2026-11-05T12:40:37.593Z",
+        "modifiedAt": "2026-11-19T14:05:52.607Z",
         "name": "Company Culture Webinar #1",
         "startDate": "2025-08-07T14:00:00.000Z",
         "endDate": "2025-08-07T15:00:00.000Z",
