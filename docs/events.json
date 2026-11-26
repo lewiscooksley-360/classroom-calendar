@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-26T13:33:26.140Z",
+  "updatedAt": "2026-11-26T22:36:48.059Z",
   "sample": false,
   "events": [
     {
@@ -95,7 +95,7 @@
       "location": "Virtual",
       "trainers": [],
       "capacity": null,
-      "registered": 0,
+      "registered": null,
       "link": "https://trial-template-617.360learning.com/paths/6afe09b32f05231298c311cb/home?sessionId=6afe09ea9e1da0fc8fcc5279"
     },
     {
